@@ -116,6 +116,7 @@ export const SHOPPING_LIST: ShoppingList = {
 };
 
 export const THEME_TAGS = ['High Protein', 'Quick', 'One Pot', 'Air Fryer', 'Budget', 'Family Friendly'];
+export const DEFAULT_SELECTED_THEME_TAGS = THEME_TAGS.slice(0, 2);
 
 export const DARK_THEME = {
   background: '#0C0C09',

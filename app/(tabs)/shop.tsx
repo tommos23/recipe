@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { DARK_THEME, SHOPPING_LIST, ShoppingItem } from '@/constants/dummyData';
 
-const itemKey = (section: string, item: ShoppingItem) => `${section}-${item.name}`;
+const itemKey = (section: string, item: ShoppingItem) => `${section}-${item.name}-${item.size}`;
 
 function Section({
   title,

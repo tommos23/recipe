@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { DARK_THEME, THEME_TAGS } from '@/constants/dummyData';
+import { DARK_THEME, DEFAULT_SELECTED_THEME_TAGS, THEME_TAGS } from '@/constants/dummyData';
 
 export default function CreateTab() {
-  const [selected, setSelected] = useState<string[]>(['High Protein', 'Quick']);
+  const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED_THEME_TAGS);
 
   const toggleTag = (tag: string) => {
     setSelected((prev) => (prev.includes(tag) ? prev.filter((item) => item !== tag) : [...prev, tag]));

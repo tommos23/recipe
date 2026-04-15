@@ -3,10 +3,12 @@ import { Tabs } from 'expo-router';
 
 import { DARK_THEME } from '@/constants/dummyData';
 
+const CREATE_ROUTE = 'create';
+
 export default function TabLayout() {
   return (
     <Tabs
-      initialRouteName="create"
+      initialRouteName={CREATE_ROUTE}
       screenOptions={{
         tabBarStyle: { backgroundColor: DARK_THEME.surface, borderTopColor: DARK_THEME.border },
         tabBarActiveTintColor: DARK_THEME.textPrimary,
