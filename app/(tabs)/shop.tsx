@@ -3,6 +3,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { DARK_THEME, SHOPPING_LIST, ShoppingItem } from '@/constants/dummyData';
 
+const itemKey = (section: string, item: ShoppingItem) => `${section}-${item.name}`;
+
 function Section({
   title,
   items,
@@ -18,7 +20,7 @@ function Section({
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>{title}</Text>
       {items.map((item) => {
-        const key = `${title}-${item.name}`;
+        const key = itemKey(title, item);
         const done = !!checked[key];
         return (
           <Pressable key={key} style={styles.item} onPress={() => onToggle(key)}>
@@ -40,8 +42,13 @@ export default function ShopTab() {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
   const totals = useMemo(() => {
-    const all = [...SHOPPING_LIST.SHOPPING_FRESH, ...SHOPPING_LIST.SHOPPING_PANTRY];
-    const complete = all.filter((item) => checked[`Fresh-${item.name}`] || checked[`Pantry-${item.name}`]).length;
+    const fresh = SHOPPING_LIST.SHOPPING_FRESH;
+    const pantry = SHOPPING_LIST.SHOPPING_PANTRY;
+    const all = [...fresh, ...pantry];
+    const complete = [
+      ...fresh.map((item) => itemKey('Fresh', item)),
+      ...pantry.map((item) => itemKey('Pantry', item)),
+    ].filter((key) => checked[key]).length;
     return { all: all.length, complete };
   }, [checked]);
 
