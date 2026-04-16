@@ -58,7 +58,7 @@ export default function RecipeDetail() {
           {recipe.steps.map((step, index) => {
             const done = !!doneSteps[index];
             return (
-              <Pressable key={step.title} style={styles.step} onPress={() => toggleStep(index)}>
+              <Pressable key={`${recipe.id}-${index}`} style={styles.step} onPress={() => toggleStep(index)}>
                 <View style={[styles.checkbox, done && styles.checkboxChecked]}>{done ? <Text>✓</Text> : null}</View>
                 <View style={styles.stepBody}>
                   <Text style={[styles.stepTitle, done && styles.stepDone]}>{step.title}</Text>
