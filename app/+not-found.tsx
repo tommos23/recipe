@@ -7,7 +7,7 @@ export default function NotFoundScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This screen does not exist.</Text>
-      <Link href="/(tabs)/create" style={styles.link}>
+      <Link href="/create" style={styles.link}>
         Go to home screen
       </Link>
     </View>
