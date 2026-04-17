@@ -1,20 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-
-import { DARK_THEME } from '@/constants/dummyData';
+import { useUnistyles } from 'react-native-unistyles';
 
 const CREATE_ROUTE = 'create';
 
 export default function TabLayout() {
+  const { theme } = useUnistyles();
+
   return (
     <Tabs
       initialRouteName={CREATE_ROUTE}
       screenOptions={{
-        tabBarStyle: { backgroundColor: DARK_THEME.surface, borderTopColor: DARK_THEME.border },
-        tabBarActiveTintColor: DARK_THEME.textPrimary,
-        tabBarInactiveTintColor: DARK_THEME.textMuted,
-        headerStyle: { backgroundColor: DARK_THEME.background },
-        headerTintColor: DARK_THEME.textPrimary,
+        sceneStyle: { backgroundColor: theme.colors.background },
+        tabBarStyle: { backgroundColor: theme.colors.surface, borderTopColor: theme.colors.border },
+        tabBarActiveTintColor: theme.colors.accent,
+        tabBarInactiveTintColor: theme.colors.tabInactive,
+        headerStyle: { backgroundColor: theme.colors.background },
+        headerTintColor: theme.colors.textPrimary,
         headerTitleStyle: { fontWeight: '600' },
       }}
     >

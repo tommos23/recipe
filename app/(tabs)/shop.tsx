@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { DARK_THEME, SHOPPING_LIST, ShoppingItem } from '@/constants/dummyData';
+import { SHOPPING_LIST, ShoppingItem } from '@/constants/dummyData';
 
 const itemKey = (section: string, item: ShoppingItem) => `${section}-${item.name}-${item.size}`;
 
@@ -69,10 +70,10 @@ export default function ShopTab() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: DARK_THEME.background,
+    backgroundColor: theme.colors.background,
   },
   content: {
     padding: 20,
@@ -82,20 +83,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
   },
   subtitle: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
   },
   section: {
-    backgroundColor: DARK_THEME.surface,
+    backgroundColor: theme.colors.surface,
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: DARK_THEME.border,
+    borderColor: theme.colors.border,
   },
   sectionTitle: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 8,
@@ -110,36 +111,36 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 6,
-    borderColor: DARK_THEME.textMuted,
+    borderColor: theme.colors.textSecondary,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxChecked: {
-    borderColor: DARK_THEME.textPrimary,
-    backgroundColor: DARK_THEME.textPrimary,
+    borderColor: theme.colors.accent,
+    backgroundColor: theme.colors.accent,
   },
   checkboxTick: {
-    color: DARK_THEME.background,
+    color: theme.colors.accentContrast,
     fontWeight: '700',
   },
   itemBody: {
     flex: 1,
-    borderBottomColor: DARK_THEME.border,
+    borderBottomColor: theme.colors.border,
     borderBottomWidth: 1,
     paddingBottom: 8,
   },
   itemName: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     fontWeight: '600',
   },
   itemDone: {
     textDecorationLine: 'line-through',
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
   },
   itemMeta: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     fontSize: 12,
     marginTop: 2,
   },
-});
+}));

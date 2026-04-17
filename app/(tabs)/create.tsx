@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { DARK_THEME, DEFAULT_SELECTED_THEME_TAGS, THEME_TAGS } from '@/constants/dummyData';
+import { DEFAULT_SELECTED_THEME_TAGS, THEME_TAGS } from '@/constants/dummyData';
 
 export default function CreateTab() {
   const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED_THEME_TAGS);
@@ -35,21 +36,21 @@ export default function CreateTab() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: DARK_THEME.background,
+    backgroundColor: theme.colors.background,
     padding: 20,
     paddingBottom: 28,
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
   },
   subtitle: {
     marginTop: 6,
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     fontSize: 14,
   },
   grid: {
@@ -59,36 +60,36 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   tag: {
-    backgroundColor: DARK_THEME.surface,
+    backgroundColor: theme.colors.surface,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: DARK_THEME.border,
+    borderColor: theme.colors.border,
     paddingVertical: 12,
     paddingHorizontal: 14,
     minWidth: '46%',
   },
   tagActive: {
-    borderColor: DARK_THEME.textPrimary,
-    backgroundColor: '#20201A',
+    borderColor: theme.colors.accent,
+    backgroundColor: theme.colors.accentSoft,
   },
   tagLabel: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     fontWeight: '600',
   },
   tagLabelActive: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
   },
   primaryButton: {
     marginTop: 'auto',
     borderRadius: 14,
-    backgroundColor: DARK_THEME.textPrimary,
+    backgroundColor: theme.colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 52,
   },
   primaryButtonText: {
-    color: DARK_THEME.background,
+    color: theme.colors.accentContrast,
     fontWeight: '700',
     fontSize: 16,
   },
-});
+}));
