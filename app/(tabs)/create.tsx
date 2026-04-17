@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
@@ -5,6 +6,7 @@ import { DARK_THEME, DEFAULT_SELECTED_THEME_TAGS, THEME_TAGS } from '@/constants
 
 export default function CreateTab() {
   const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED_THEME_TAGS);
+  const router = useRouter();
 
   const toggleTag = (tag: string) => {
     setSelected((prev) => (prev.includes(tag) ? prev.filter((item) => item !== tag) : [...prev, tag]));
@@ -30,6 +32,9 @@ export default function CreateTab() {
       </ScrollView>
       <Pressable style={styles.primaryButton}>
         <Text style={styles.primaryButtonText}>Generate Meal Pack</Text>
+      </Pressable>
+      <Pressable onPress={() => router.push('/login')} style={styles.secondaryButton}>
+        <Text style={styles.secondaryButtonText}>Login or create account</Text>
       </Pressable>
     </View>
   );
@@ -88,6 +93,21 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: {
     color: DARK_THEME.background,
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  secondaryButton: {
+    marginTop: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: DARK_THEME.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 52,
+    backgroundColor: DARK_THEME.surface,
+  },
+  secondaryButtonText: {
+    color: DARK_THEME.textPrimary,
     fontWeight: '700',
     fontSize: 16,
   },
