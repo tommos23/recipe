@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { RECIPES } from '@/constants/dummyData';
+import { type AppTheme, useAppTheme } from '@/constants/theme';
 
 type Segment = 'Ingredients' | 'Method';
 
@@ -12,7 +12,8 @@ export default function RecipeDetail() {
   const recipe = useMemo(() => RECIPES.find((item) => item.id === id), [id]);
   const [activeSegment, setActiveSegment] = useState<Segment>('Ingredients');
   const [doneSteps, setDoneSteps] = useState<Record<number, boolean>>({});
-  const { theme } = useUnistyles();
+  const { theme } = useAppTheme();
+  const styles = getStyles(theme);
 
   if (!recipe) {
     return (
@@ -82,7 +83,8 @@ export default function RecipeDetail() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -210,4 +212,4 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: 16,
     padding: 20,
   },
-}));
+  });

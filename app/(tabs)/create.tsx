@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { DEFAULT_SELECTED_THEME_TAGS, THEME_TAGS } from '@/constants/dummyData';
+import { type AppTheme, useAppTheme } from '@/constants/theme';
 
 export default function CreateTab() {
+  const { theme } = useAppTheme();
+  const styles = getStyles(theme);
   const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED_THEME_TAGS);
 
   const toggleTag = (tag: string) => {
@@ -36,7 +38,8 @@ export default function CreateTab() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -92,4 +95,4 @@ const styles = StyleSheet.create((theme) => ({
     fontWeight: '700',
     fontSize: 16,
   },
-}));
+  });

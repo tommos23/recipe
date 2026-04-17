@@ -1,7 +1,7 @@
 import { type StatusBarStyle } from 'expo-status-bar';
-import { StyleSheet } from 'react-native-unistyles';
+import { useColorScheme } from 'react-native';
 
-type ThemeColors = {
+export type ThemeColors = {
   background: string;
   surface: string;
   surfaceMuted: string;
@@ -14,7 +14,7 @@ type ThemeColors = {
   tabInactive: string;
 };
 
-type AppThemeDefinition = {
+export type AppTheme = {
   isDark: boolean;
   statusBar: StatusBarStyle;
   colors: ThemeColors;
@@ -53,11 +53,11 @@ export const themes = {
       tabInactive: '#74746A',
     },
   },
-} as const satisfies Record<string, AppThemeDefinition>;
+} as const satisfies Record<string, AppTheme>;
 
-StyleSheet.configure({
-  settings: {
-    adaptiveThemes: true,
-  },
-  themes,
-});
+export function useAppTheme() {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? themes.dark : themes.light;
+
+  return { theme };
+}

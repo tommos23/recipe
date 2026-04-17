@@ -1,11 +1,10 @@
-import './theme';
-
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useUnistyles } from 'react-native-unistyles';
+
+import { useAppTheme } from '@/constants/theme';
 
 export default function RootLayout() {
-  const { theme } = useUnistyles();
+  const { theme } = useAppTheme();
 
   return (
     <>

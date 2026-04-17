@@ -1,8 +1,12 @@
 import { Link } from 'expo-router';
-import { Text, View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { type AppTheme, useAppTheme } from '@/constants/theme';
 
 export default function NotFoundScreen() {
+  const { theme } = useAppTheme();
+  const styles = getStyles(theme);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This screen does not exist.</Text>
@@ -13,7 +17,8 @@ export default function NotFoundScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -30,4 +35,4 @@ const styles = StyleSheet.create((theme) => ({
   link: {
     color: theme.colors.accent,
   },
-}));
+  });

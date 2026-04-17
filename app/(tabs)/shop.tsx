@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { SHOPPING_LIST, ShoppingItem } from '@/constants/dummyData';
+import { type AppTheme, useAppTheme } from '@/constants/theme';
 
 const itemKey = (section: string, item: ShoppingItem) => `${section}-${item.name}-${item.size}`;
 
@@ -11,11 +11,13 @@ function Section({
   items,
   checked,
   onToggle,
+  styles,
 }: {
   title: string;
   items: ShoppingItem[];
   checked: Record<string, boolean>;
   onToggle: (key: string) => void;
+  styles: ReturnType<typeof getStyles>;
 }) {
   return (
     <View style={styles.section}>
@@ -40,6 +42,8 @@ function Section({
 }
 
 export default function ShopTab() {
+  const { theme } = useAppTheme();
+  const styles = getStyles(theme);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
   const totals = useMemo(() => {
@@ -64,13 +68,14 @@ export default function ShopTab() {
         {totals.complete}/{totals.all} items checked
       </Text>
 
-      <Section title="Fresh" items={SHOPPING_LIST.SHOPPING_FRESH} checked={checked} onToggle={toggle} />
-      <Section title="Pantry" items={SHOPPING_LIST.SHOPPING_PANTRY} checked={checked} onToggle={toggle} />
+      <Section title="Fresh" items={SHOPPING_LIST.SHOPPING_FRESH} checked={checked} onToggle={toggle} styles={styles} />
+      <Section title="Pantry" items={SHOPPING_LIST.SHOPPING_PANTRY} checked={checked} onToggle={toggle} styles={styles} />
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -143,4 +148,4 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: 12,
     marginTop: 2,
   },
-}));
+  });

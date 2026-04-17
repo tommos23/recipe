@@ -1,11 +1,12 @@
 import { Link } from 'expo-router';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { RECIPES } from '@/constants/dummyData';
+import { type AppTheme, useAppTheme } from '@/constants/theme';
 
 export default function CookTab() {
-  const { theme } = useUnistyles();
+  const { theme } = useAppTheme();
+  const styles = getStyles(theme);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -26,7 +27,8 @@ export default function CookTab() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -62,4 +64,4 @@ const styles = StyleSheet.create((theme) => ({
     color: theme.colors.textSecondary,
     marginTop: 4,
   },
-}));
+  });
