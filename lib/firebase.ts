@@ -1,5 +1,6 @@
 import { getApp, getApps } from '@react-native-firebase/app';
 import { getAnalytics } from '@react-native-firebase/analytics';
+import { initializeAppCheck } from '@react-native-firebase/app-check';
 import { getAuth } from '@react-native-firebase/auth';
 import { getCrashlytics } from '@react-native-firebase/crashlytics';
 import { getFirestore } from '@react-native-firebase/firestore';
@@ -23,7 +24,6 @@ export function getFirebaseServices() {
   return {
     app,
     analytics: getAnalytics(app),
-    appCheck: app.appCheck(),
     auth: getAuth(app),
     crashlytics: getCrashlytics(),
     firestore: getFirestore(app),
@@ -36,3 +36,5 @@ export function getFirebaseServices() {
 export function getFirebaseAuth() {
   return getFirebaseServices()?.auth ?? null;
 }
+
+export { initializeAppCheck };
