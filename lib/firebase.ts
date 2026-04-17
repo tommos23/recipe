@@ -14,6 +14,56 @@ export function getFirebaseApp() {
   return isFirebaseConfigured() ? getApp() : null;
 }
 
+function getOptionalFirebaseService<T>(factory: () => T) {
+  try {
+    return factory();
+  } catch {
+    return null;
+  }
+}
+
+export function getFirebaseAnalytics() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getAnalytics(app)) : null;
+}
+
+export function getFirebaseAuth() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getAuth(app)) : null;
+}
+
+export function getFirebaseCrashlytics() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getCrashlytics()) : null;
+}
+
+export function getFirebaseFirestore() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getFirestore(app)) : null;
+}
+
+export function getFirebaseFunctions() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getFunctions(app)) : null;
+}
+
+export function getFirebasePerformance() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getPerformance(app)) : null;
+}
+
+export function getFirebaseRemoteConfig() {
+  const app = getFirebaseApp();
+
+  return app ? getOptionalFirebaseService(() => getRemoteConfig(app)) : null;
+}
+
 export function getFirebaseServices() {
   const app = getFirebaseApp();
 
@@ -23,18 +73,14 @@ export function getFirebaseServices() {
 
   return {
     app,
-    analytics: getAnalytics(app),
-    auth: getAuth(app),
-    crashlytics: getCrashlytics(),
-    firestore: getFirestore(app),
-    functions: getFunctions(app),
-    perf: getPerformance(app),
-    remoteConfig: getRemoteConfig(app),
+    analytics: getFirebaseAnalytics(),
+    auth: getFirebaseAuth(),
+    crashlytics: getFirebaseCrashlytics(),
+    firestore: getFirebaseFirestore(),
+    functions: getFirebaseFunctions(),
+    perf: getFirebasePerformance(),
+    remoteConfig: getFirebaseRemoteConfig(),
   };
-}
-
-export function getFirebaseAuth() {
-  return getFirebaseServices()?.auth ?? null;
 }
 
 export { initializeAppCheck };

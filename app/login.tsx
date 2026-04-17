@@ -19,6 +19,7 @@ type AuthMode = 'sign-in' | 'create-account';
 
 const FIREBASE_PENDING_MESSAGE =
   'Firebase Auth will start working after you add the Google services config files and rebuild the app.';
+const EMAIL_PATTERN = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {
@@ -41,7 +42,7 @@ export default function LoginScreen() {
 
     if (!auth) {
       setMessage(FIREBASE_PENDING_MESSAGE);
-      return;
+      return () => {};
     }
 
     setCurrentEmail(auth.currentUser?.email ?? null);
@@ -58,10 +59,10 @@ export default function LoginScreen() {
       return;
     }
 
-    const normalisedEmail = email.trim().toLowerCase();
+    const normalizedEmail = email.trim().toLowerCase();
 
-    if (!normalisedEmail || password.length < 6) {
-      setMessage('Enter an email address and a password with at least 6 characters.');
+    if (!EMAIL_PATTERN.test(normalizedEmail) || password.length < 6) {
+      setMessage('Enter a valid email address and a password with at least 6 characters.');
       return;
     }
 
@@ -71,10 +72,10 @@ export default function LoginScreen() {
     try {
       const result =
         mode === 'sign-in'
-          ? await signInWithEmailAndPassword(auth, normalisedEmail, password)
-          : await createUserWithEmailAndPassword(auth, normalisedEmail, password);
+          ? await signInWithEmailAndPassword(auth, normalizedEmail, password)
+          : await createUserWithEmailAndPassword(auth, normalizedEmail, password);
 
-      setCurrentEmail(result.user.email ?? normalisedEmail);
+      setCurrentEmail(result.user.email ?? normalizedEmail);
       setMessage(mode === 'sign-in' ? 'Signed in successfully.' : 'Account created successfully.');
     } catch (error) {
       setMessage(getErrorMessage(error));
