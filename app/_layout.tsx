@@ -1,17 +1,20 @@
+import './theme';
+
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-
-import { DARK_THEME } from '@/constants/dummyData';
+import { useUnistyles } from 'react-native-unistyles';
 
 export default function RootLayout() {
+  const { theme } = useUnistyles();
+
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style={theme.statusBar} />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: DARK_THEME.background },
-          headerTintColor: DARK_THEME.textPrimary,
-          contentStyle: { backgroundColor: DARK_THEME.background },
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.textPrimary,
+          contentStyle: { backgroundColor: theme.colors.background },
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

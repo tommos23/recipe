@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
-import { DARK_THEME, RECIPES } from '@/constants/dummyData';
+import { RECIPES } from '@/constants/dummyData';
 
 type Segment = 'Ingredients' | 'Method';
 
@@ -11,6 +12,7 @@ export default function RecipeDetail() {
   const recipe = useMemo(() => RECIPES.find((item) => item.id === id), [id]);
   const [activeSegment, setActiveSegment] = useState<Segment>('Ingredients');
   const [doneSteps, setDoneSteps] = useState<Record<number, boolean>>({});
+  const { theme } = useUnistyles();
 
   if (!recipe) {
     return (
@@ -26,7 +28,7 @@ export default function RecipeDetail() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <View style={[styles.hero, { borderColor: recipe.lightAccent }]}> 
+      <View style={[styles.hero, { borderColor: theme.isDark ? recipe.lightAccent : recipe.accentColor }]}>
         <Text style={styles.emoji}>{recipe.emoji}</Text>
         <Text style={styles.title}>{recipe.title}</Text>
         <Text style={styles.subtitle}>{recipe.subtitle}</Text>
@@ -59,7 +61,9 @@ export default function RecipeDetail() {
             const done = !!doneSteps[index];
             return (
               <Pressable key={`${recipe.id}-${index}`} style={styles.step} onPress={() => toggleStep(index)}>
-                <View style={[styles.checkbox, done && styles.checkboxChecked]}>{done ? <Text>✓</Text> : null}</View>
+                <View style={[styles.checkbox, done && styles.checkboxChecked]}>
+                  {done ? <Text style={styles.checkboxTick}>✓</Text> : null}
+                </View>
                 <View style={styles.stepBody}>
                   <Text style={[styles.stepTitle, done && styles.stepDone]}>{step.title}</Text>
                   <Text style={styles.stepText}>{step.text}</Text>
@@ -78,17 +82,17 @@ export default function RecipeDetail() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: DARK_THEME.background,
+    backgroundColor: theme.colors.background,
   },
   content: {
     padding: 20,
     gap: 14,
   },
   hero: {
-    backgroundColor: DARK_THEME.surface,
+    backgroundColor: theme.colors.surface,
     borderRadius: 16,
     borderWidth: 1,
     padding: 16,
@@ -98,12 +102,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     fontSize: 20,
     fontWeight: '700',
   },
   subtitle: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     marginTop: 6,
   },
   segmentRow: {
@@ -114,31 +118,32 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: DARK_THEME.border,
+    borderColor: theme.colors.border,
     paddingVertical: 10,
     alignItems: 'center',
-    backgroundColor: DARK_THEME.surface,
+    backgroundColor: theme.colors.surface,
   },
   segmentActive: {
-    borderColor: DARK_THEME.textPrimary,
+    borderColor: theme.colors.accent,
+    backgroundColor: theme.colors.accentSoft,
   },
   segmentText: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     fontWeight: '600',
   },
   segmentTextActive: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
   },
   card: {
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: DARK_THEME.border,
-    backgroundColor: DARK_THEME.surface,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
     gap: 10,
   },
   lineItem: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     lineHeight: 20,
   },
   step: {
@@ -150,55 +155,59 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: DARK_THEME.textMuted,
+    borderColor: theme.colors.textSecondary,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
   },
   checkboxChecked: {
-    borderColor: DARK_THEME.textPrimary,
-    backgroundColor: DARK_THEME.textPrimary,
+    borderColor: theme.colors.accent,
+    backgroundColor: theme.colors.accent,
+  },
+  checkboxTick: {
+    color: theme.colors.accentContrast,
+    fontWeight: '700',
   },
   stepBody: {
     flex: 1,
     borderBottomWidth: 1,
-    borderBottomColor: DARK_THEME.border,
+    borderBottomColor: theme.colors.border,
     paddingBottom: 8,
   },
   stepTitle: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     fontWeight: '700',
   },
   stepDone: {
     textDecorationLine: 'line-through',
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
   },
   stepText: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     marginTop: 4,
     lineHeight: 18,
   },
   tipBox: {
-    backgroundColor: DARK_THEME.surface,
+    backgroundColor: theme.colors.surface,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: DARK_THEME.border,
+    borderColor: theme.colors.border,
     padding: 14,
   },
   tipLabel: {
-    color: DARK_THEME.textMuted,
+    color: theme.colors.textSecondary,
     textTransform: 'uppercase',
     fontSize: 12,
     letterSpacing: 0.8,
   },
   tipText: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     marginTop: 6,
     lineHeight: 20,
   },
   empty: {
-    color: DARK_THEME.textPrimary,
+    color: theme.colors.textPrimary,
     fontSize: 16,
     padding: 20,
   },
-});
+}));
